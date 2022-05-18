@@ -17,6 +17,7 @@ RUN set -eux; \
 	dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
 	wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; \
 	wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc"; \
+	wget -O /tmp/v4.7.5.tar.gz "https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz" ;'
 	\
 # verify the signature
 	export GNUPGHOME="$(mktemp -d)"; \
@@ -70,9 +71,7 @@ RUN set -eux; \
 	chmod 1777 "$GHOST_CONTENT"; \
 	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper; \
 	chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data"; \
-	apt-get install -y --no-install-recommends ca-certificates gnupg wget; \
-	wget https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && tar -xf v4.7.5.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v4.7.5.tar.gz; \
-	apt-get purge -y --auto-remove ca-certificates gnupg wget; \
+	tar -xf /tmp/v4.7.5.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf /tmp/v4.7.5.tar.gz; \
 	\
 # force install "sqlite3" manually since it's an optional dependency of "ghost"
 # (which means that if it fails to install, like on ARM/ppc64le/s390x, the failure will be silently ignored and thus turn into a runtime error instead)
