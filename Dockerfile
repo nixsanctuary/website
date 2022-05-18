@@ -106,4 +106,4 @@ VOLUME $GHOST_CONTENT
 COPY docker-entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD sed -i 's/2368/'"$PORT"'/g' /var/lib/ghost/config.production.json && node current/index.js"
+CMD sed -i 's/2368/'"$PORT"'/g' /var/lib/ghost/config.production.json && node current/index.js
