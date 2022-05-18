@@ -1,35 +1,13 @@
-name: bundler
+name: docker
 on:
+  push:
+  pull_request:
   workflow_dispatch:
   repository_dispatch:
     types: [build]
     
 jobs:
-  mixer:
-    runs-on: ubuntu-latest
-    container: 
-      image: clearlinux:latest
-      options: --privileged --cap-add=SYS_ADMIN
-    steps:
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          repo: clearfraction/mass-rebuild
-          workflow: mass-rebuild.yml
-          check_artifacts: true
-          path: /home
-      - name: Build new release
-        shell: bash
-        run: |
-          swupd bundle-add curl --quiet
-          cd /home && curl -s -LO https://github.com/clearfraction/bundles/raw/master/build.sh && chmod +x build.sh
-          ./build.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_USER: paulcarroty
-      
   docker:
-    needs: mixer
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,7 +24,7 @@ jobs:
           EOF
       - name: CD
         env:
-          APP: "clearfraction"
+          APP: "nixsanctuary"
           EMAIL: ${{ secrets.EMAIL }}
           API_KEY: ${{ secrets.API_KEY }}
           DOCKER_OPTIONS: "--no-cache"
@@ -57,6 +35,6 @@ jobs:
             --password-stdin
           docker build \
             ${DOCKER_OPTIONS} \
-            --tag registry.heroku.com/clearfraction/web .
+            --tag registry.heroku.com/${APP}/web .
           heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
           rm -rf ~/.netrc /home/runner/.docker
