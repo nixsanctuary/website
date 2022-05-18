@@ -106,6 +106,4 @@ VOLUME $GHOST_CONTENT
 COPY docker-entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
-
-EXPOSE 2368
-CMD bash -c "env url=http://localhost:$PORT node current/index.js"
+CMD sed -i 's/2368/'"$PORT"'/g' /var/lib/ghost/config.production.json && node current/index.js"
