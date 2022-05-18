@@ -17,7 +17,7 @@ RUN set -eux; \
 	dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
 	wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; \
 	wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc"; \
-	wget -O /tmp/v4.7.5.tar.gz "https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz" ;'
+	wget -O /tmp/v4.7.5.tar.gz "https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz" ; \
 	\
 # verify the signature
 	export GNUPGHOME="$(mktemp -d)"; \
