@@ -51,11 +51,13 @@ RUN set -eux; \
 	mkdir -p "$GHOST_INSTALL"; \
 	chown node:node "$GHOST_INSTALL"; \
 	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper; \
-	chown node:node -R "$GHOST_CONTENT"/themes/casper && chown node:node -R "$GHOST_CONTENT"/data; \
-	curl -LO https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && mkdir "$GHOST_CONTENT"/themes/casper && tar -xf v*.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v*.tar.gz; \
+	chown node:node -R "$GHOST_CONTENT"/themes/casper; \
+	wget https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && mkdir "$GHOST_CONTENT"/themes/casper && tar -xf v*.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v*.tar.gz; \
 	\
 	gosu node ghost install "$GHOST_VERSION" --db sqlite3 --no-prompt --no-stack --no-setup --dir "$GHOST_INSTALL"; \
 	\
+	chown node:node -R "$GHOST_CONTENT"/data;
+	
 # Tell Ghost to listen on all ips and not prompt for additional configuration
 	cd "$GHOST_INSTALL"; \
 	gosu node ghost config --ip '::' --port 2368 --no-prompt --db sqlite3 --url http://localhost:2368 --dbpath "$GHOST_CONTENT/data/ghost.db"; \
