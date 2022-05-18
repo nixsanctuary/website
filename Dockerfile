@@ -108,4 +108,4 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 2368
-CMD node current/index.js --port "$PORT"
+CMD ghost config --port="$PORT" && node current/index.js
