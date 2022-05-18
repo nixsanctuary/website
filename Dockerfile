@@ -50,6 +50,8 @@ ENV GHOST_VERSION 4.47.4
 RUN set -eux; \
 	mkdir -p "$GHOST_INSTALL"; \
 	chown node:node "$GHOST_INSTALL"; \
+	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT/themes" && touch "$GHOST_CONTENT/data/ghost.db"; \
+	chown node:node "$GHOST_CONTENT/data" && chown node:node "$GHOST_CONTENT/themes" && chown node:node "$GHOST_CONTENT/data/ghost.db";
 	\
 	gosu node ghost install "$GHOST_VERSION" --db sqlite3 --no-prompt --no-stack --no-setup --dir "$GHOST_INSTALL"; \
 	\
