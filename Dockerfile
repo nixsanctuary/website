@@ -56,7 +56,7 @@ RUN set -eux; \
 	\
 	gosu node ghost install "$GHOST_VERSION" --db sqlite3 --no-prompt --no-stack --no-setup --dir "$GHOST_INSTALL"; \
 	\
-	chown node:node -R "$GHOST_CONTENT"/data;
+	chown node:node -R "$GHOST_CONTENT"/data
 	
 # Tell Ghost to listen on all ips and not prompt for additional configuration
 	cd "$GHOST_INSTALL"; \
