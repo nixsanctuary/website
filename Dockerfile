@@ -93,7 +93,8 @@ RUN set -eux; \
 	gosu node yarn cache clean; \
 	gosu node npm cache clean --force; \
 	npm cache clean --force; \
-	rm -rv /tmp/yarn* /tmp/v8*
+	rm -rv /tmp/yarn* /tmp/v8*; \
+	chmod +x docker-entrypoint.sh
 
 WORKDIR $GHOST_INSTALL
 VOLUME $GHOST_CONTENT
