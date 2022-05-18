@@ -108,4 +108,4 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 2368
-CMD url=localhost:$PORT node current/index.js
+CMD url=http://localhost:$PORT node current/index.js
