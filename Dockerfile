@@ -33,6 +33,7 @@ RUN set -eux; \
 	chmod +x /usr/local/bin/gosu; \
 # verify that the binary works
 	gosu --version; \
+	useradd node;
 	gosu nobody true
 
 ENV NODE_ENV production
@@ -70,7 +71,7 @@ RUN set -eux; \
 	chmod 1777 "$GHOST_CONTENT"; \
 	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper; \
 	chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data"; \
-	wget https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && tar -xf v*.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v*.tar.gz; \
+	wget https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && tar -xf v4.7.5.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v4.7.5.tar.gz; \
 	\
 # force install "sqlite3" manually since it's an optional dependency of "ghost"
 # (which means that if it fails to install, like on ARM/ppc64le/s390x, the failure will be silently ignored and thus turn into a runtime error instead)
