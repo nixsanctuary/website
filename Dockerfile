@@ -33,7 +33,7 @@ RUN set -eux; \
 	chmod +x /usr/local/bin/gosu; \
 # verify that the binary works
 	gosu --version; \
-	useradd node;
+	useradd node; \
 	gosu nobody true
 
 ENV NODE_ENV production
