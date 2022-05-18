@@ -50,9 +50,6 @@ ENV GHOST_VERSION 4.47.4
 RUN set -eux; \
 	mkdir -p "$GHOST_INSTALL"; \
 	chown node:node "$GHOST_INSTALL"; \
-	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper; \
-	chown node:node -R "$GHOST_CONTENT"/themes/casper; \
-	wget https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && mkdir "$GHOST_CONTENT"/themes/casper && tar -xf v*.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v*.tar.gz; \
 	\
 	gosu node ghost install "$GHOST_VERSION" --db sqlite3 --no-prompt --no-stack --no-setup --dir "$GHOST_INSTALL"; \
 	\
@@ -71,6 +68,9 @@ RUN set -eux; \
 	mkdir -p "$GHOST_CONTENT"; \
 	chown node:node "$GHOST_CONTENT"; \
 	chmod 1777 "$GHOST_CONTENT"; \
+	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper; \
+	chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data"; \
+	wget https://github.com/TryGhost/Casper/archive/refs/tags/v4.7.5.tar.gz && mkdir "$GHOST_CONTENT"/themes/casper && tar -xf v*.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf v*.tar.gz; \
 	\
 # force install "sqlite3" manually since it's an optional dependency of "ghost"
 # (which means that if it fails to install, like on ARM/ppc64le/s390x, the failure will be silently ignored and thus turn into a runtime error instead)
