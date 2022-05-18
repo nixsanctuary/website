@@ -1,9 +1,9 @@
-name: bundler
+name: docker
 on:
   workflow_dispatch:
   repository_dispatch:
     types: [build]
-    
+jobs:   
   docker:
     runs-on: ubuntu-latest
     steps:
