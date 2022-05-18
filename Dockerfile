@@ -69,8 +69,8 @@ RUN set -eux; \
 	mkdir -p "$GHOST_CONTENT"; \
 	chown node:node "$GHOST_CONTENT"; \
 	chmod 1777 "$GHOST_CONTENT"; \
-	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper; \
-	chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data"; \
+	mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT"/logs; \
+	chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data" "$GHOST_CONTENT"/logs; \
 	tar -xf /tmp/v4.7.5.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf /tmp/v4.7.5.tar.gz; \
 	\
 # force install "sqlite3" manually since it's an optional dependency of "ghost"
@@ -108,4 +108,4 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 2368
-CMD ghost config --port "$PORT" && gosu node node current/index.js
+CMD gosu node node current/index.js --port "$PORT"
