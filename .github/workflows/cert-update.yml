@@ -35,6 +35,7 @@ jobs:
           --preferred-challenges=dns \
           --email ${EMAIL} \
           --server https://acme-v02.api.letsencrypt.org/directory \
-          --agree-tos \
+          --non-interactive --agree-tos \
           -d nixsanctuary.com
           sudo heroku certs:update /etc/letsencrypt/live/nixsanctuary.com/fullchain.pem /etc/letsencrypt/live/nixsanctuary.com/privkey.pem
+          rm -rf /etc/letsencrypt
