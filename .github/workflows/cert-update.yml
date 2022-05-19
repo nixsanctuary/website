@@ -29,7 +29,7 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           DOCKER_OPTIONS: "--no-cache"
         run: |
-          pip install certbot && sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+          sudo apt update && sudo apt install certbot
           sudo certbot certonly --manual \
           --rsa-key-size 4096 \
           --preferred-challenges=dns \
