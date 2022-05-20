@@ -68,7 +68,8 @@ RUN set -eux; \
 	mv "$GHOST_CONTENT" "$GHOST_INSTALL/content.orig"; \
 	mkdir -p "$GHOST_CONTENT"; \
 	chown node:node "$GHOST_CONTENT"; \
-	chmod 1777 "$GHOST_CONTENT"; \
+	chmod 1777 "$GHOST_CONTENT" /var/lib/ghost/content.orig; \
+	rm -rf "GHOST_CONTENT" && ln -sf /var/lib/ghost/content.orig /var/lib/ghost/content; \ 
 	#mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT"/logs; \
 	#chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data" "$GHOST_CONTENT"/logs; \
 	#tar -xf /tmp/v4.7.5.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf /tmp/v4.7.5.tar.gz; \
