@@ -69,10 +69,8 @@ RUN set -eux; \
 	mkdir -p "$GHOST_CONTENT"; \
 	chown node:node "$GHOST_CONTENT"; \
 	chmod 1777 "$GHOST_CONTENT" /var/lib/ghost/content.orig /var/lib/ghost/content; \
-	cp -pr /var/lib/ghost/content.orig/* /var/lib/ghost/content/; \ 
-	#mkdir -p "$GHOST_CONTENT/data" "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT"/logs; \
-	#chown node:node -R "$GHOST_CONTENT"/themes/casper "$GHOST_CONTENT/data" "$GHOST_CONTENT"/logs; \
-	#tar -xf /tmp/v4.7.5.tar.gz -C "$GHOST_CONTENT"/themes/casper --strip-components=1 && rm -rf /tmp/v4.7.5.tar.gz; \
+	cp -pr /var/lib/ghost/content.orig/* "$GHOST_CONTENT"/; \
+	mkdir -p "$GHOST_CONTENT"/adapters/storage && npm install ghost-storage-adapter-s3 && cp -r ./node_modules/ghost-storage-adapter-s3 "$GHOST_CONTENT"/adapters/storage/s3 && rm -rf ./node_modules && npm cache clean --force; \
 	\
 # force install "sqlite3" manually since it's an optional dependency of "ghost"
 # (which means that if it fails to install, like on ARM/ppc64le/s390x, the failure will be silently ignored and thus turn into a runtime error instead)
