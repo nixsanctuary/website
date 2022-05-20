@@ -104,6 +104,5 @@ WORKDIR $GHOST_INSTALL
 VOLUME $GHOST_CONTENT
 
 COPY docker-entrypoint.sh /usr/local/bin
-RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD sed -i 's/localhost:2368/nixsanctuary.herokuapp.com/g' /var/lib/ghost/config.production.json && sed -i 's/2368/'"$PORT"'/g' /var/lib/ghost/config.production.json && node current/index.js
