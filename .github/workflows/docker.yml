@@ -29,6 +29,7 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           DOCKER_OPTIONS: "--no-cache"
         run: |
+          chmod +x docker-entrypoint.sh
           echo ${API_KEY} | docker login \
             --username=${EMAIL} \
             registry.heroku.com \
@@ -36,6 +37,6 @@ jobs:
           docker build \
             ${DOCKER_OPTIONS} \
             --tag registry.heroku.com/${APP}/web .
-          heroku stack:set container --app ${APP}
+          # heroku stack:set container --app ${APP}
           heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
           rm -rf ~/.netrc /home/runner/.docker
